@@ -1,0 +1,83 @@
+%% draftex.cls
+% Copyright (c) 2019 Ben Dempe
+%
+% Permission is hereby granted, free of charge, to any person obtaining a copy
+% of this software and associated documentation files (the "Software"), to deal
+% in the Software without restriction, including without limitation the rights
+% to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+% copies of the Software, and to permit persons to whom the Software is
+% furnished to do so, subject to the following conditions:
+%
+% The above copyright notice and this permission notice shall be included in all
+% copies or substantial portions of the Software.
+
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+% IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+% FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+% AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+% LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+% OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+% SOFTWARE.
+
+\NeedsTeXFormat{LaTeX2e}
+
+\ProvidesPackage{draftex}
+\RequirePackage{ifthen}
+\RequirePackage{xcolor}
+
+\newif\ifprintnotes
+\printnotesfalse
+\DeclareOption{on}{\printnotestrue}
+\DeclareOption{off}{\printnotesfalse}
+
+\DeclareOption*{%
+  \PassOptionsToClass{\CurrentOption}{article}%
+}
+\ProcessOptions\relax
+
+\ifprintnotes
+	\renewcommand{\baselinestretch}{1.5} 
+	\newcommand{\NTC}{\color{red}$<$CITE$>$ \color{black}}
+	\newcommand{\FT}{\color{purple} $<$finish thought$>$ \color{black}}
+	\newcommand{\note}[1]{\color{blue} (#1) \color{black}}
+	\newcommand{\wording}{\color{violet}$<$wording$>$ \color{black}}
+	\newcommand{\CC}{\color{green}$<$CC$>$ \color{black}}
+	\newcommand{\PV}{\color{brown} $<$PV$>$ \color{black}}
+	\newcommand{\awk}{\color{orange} $<$awkward$>$ \color{black}}
+	\newcommand {\DC}{\color{olive} $<$double check$>$ \color{black}}
+	\newcommand{\NW}{\color{teal} $<$nice work!$>$ \color{black}} 
+	\newcommand{\IFH}{ \begin{center}\textit{(Insert figure here)}\end{center}}
+\else
+	\renewcommand{\baselinestretch}{1.5} 
+	\newcommand{\NTC}{}
+	\newcommand{\FT}{}
+	\newcommand{\note}[1]{}
+	\newcommand{\wording}{}
+	\newcommand{\CC}{}
+	\newcommand{\PV}{}
+	\newcommand{\awk}{}
+	\newcommand{\DC}{}
+	\newcommand{\NW}{}	
+	\newcommand{\IFH}{}
+\fi
+
+\newcommand{\noteheader} {
+\ifprintnotes
+\begin{center}
+\fbox{\fbox{\parbox{5.5in}{
+
+
+\begin{tabular}{lllll}
+\NTC& \textbackslash NTC     & Indicates that a thought/quote needs to be cited  &  &  \\
+\FT& \textbackslash FT      & finish thought &  &  \\
+\wording & \textbackslash wording & change wording &  &  \\
+\CC   & \textbackslash CC      & Indicates that a citation may not be correct    &  &  \\
+\PV   & \textbackslash PV      & passive voice &  &  \\
+\awk & \textbackslash awk     & last sentence was awkward   &  &  \\
+\DC  & \textbackslash DC      & Double check fact or statistic &  &  \\
+\NW & \textbackslash NW      & Nice work! Positive reinforcement is good  &  &  \\
+(Insert figure here) & \textbackslash IFH    & Insert figure here. Shows where a figure should end up          &  & 
+\end{tabular}
+}}}
+\end{center} \fi
+}
